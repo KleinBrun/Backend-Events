@@ -1,12 +1,12 @@
-const express = require('express')
-var cors = require('cors');
+const express = require('express');
+const cors = require('cors');
 const cron = require('node-cron');
 const { processLogs } = require('../scripts/script-rabbit-logs');
 const date = require('date-and-time');
 const { validateSecretKey } = require('../middlewares/auth-middleware');
-const os = require('os');
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 
 class Server {
     constructor() {
@@ -14,7 +14,7 @@ class Server {
         this.port = process.env.PORT;
         this.paths = {
             logs: '/api/logs',
-        }
+        };
 
         this.certOptions = {
             key: fs.readFileSync(path.join(__dirname, '../certs/private.key')),
@@ -49,13 +49,13 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.paths.logs, require('../routes/logs.routes'))
+        this.app.use(this.paths.logs, require('../routes/logs.routes'));
     }
 
     listen() {
-        this.app.listen(this.port, () => {
-            console.log(`Server Corriendo en el puerto ${this.port}`)
-        })
+        https.createServer(this.certOptions, this.app).listen(this.port, () => {
+            console.log(`Server Corriendo en el puerto ${this.port}`);
+        });
     }
 }
 
