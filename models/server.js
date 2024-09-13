@@ -6,6 +6,7 @@ const date = require('date-and-time');
 const { validateSecretKey } = require('../middlewares/auth-middleware');
 const os = require('os');
 const fs = require('fs');
+const path = require('path');
 
 class Server {
     constructor() {
