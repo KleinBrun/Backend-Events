@@ -4,6 +4,7 @@ const cron = require('node-cron');
 const { processLogs } = require('../scripts/script-rabbit-logs');
 const date = require('date-and-time');
 const { validateSecretKey } = require('../middlewares/auth-middleware');
+const os = require('os');
 
 class Server {
     constructor() {
@@ -43,6 +44,22 @@ class Server {
     listen() {
         this.app.listen(this.port, () => {
             console.log(`Server Corriendo en el puerto ${this.port}`)
+
+            // Obtener y mostrar la IP local
+            const interfaces = os.networkInterfaces();
+            let ip = 'Desconocida';
+
+            for (let key in interfaces) {
+                for (let i = 0; i < interfaces[key].length; i++) {
+                    const iface = interfaces[key][i];
+                    if (iface.family === 'IPv4' && !iface.internal) {
+                        ip = iface.address;
+                        break;
+                    }
+                }
+            }
+
+            console.log(`Conectado desde la IP: ${ip} y puerto: ${this.port}`);
         })
     }
 }
