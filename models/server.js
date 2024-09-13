@@ -30,7 +30,8 @@ class Server {
         const corsOptions = {
             origin: ['http://localhost:3000', 'https://staging.d1o22k5pthccw4.amplifyapp.com'],
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
-            allowedHeaders: ['Content-Type', 'x-api-key']
+            allowedHeaders: ['Content-Type', 'x-api-key'],
+            credentials: true, 
         };
         this.app.use(cors(corsOptions));
         this.app.use(express.json());
