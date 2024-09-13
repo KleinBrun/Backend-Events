@@ -1,5 +1,5 @@
-const { MongoClient } = require('mongodb');
 require('dotenv').config();
+const { MongoClient } = require('mongodb');
 
 let client;
 
@@ -10,9 +10,10 @@ const dbConection = async () => {
             await client.connect();
         }
         const db = client.db('Registration');
+        console.log('Conectado a MongoDB');
         return db;
     } catch (error) {
-        console.logr('Error al conectar a la DB :: ', error);
+        console.log('Error al conectar a la DB :: ', error);
         throw error;
     }
 }

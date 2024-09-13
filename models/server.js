@@ -1,7 +1,5 @@
 const express = require('express')
 var cors = require('cors');
-const { dbConection } = require('../database/config');
-const fileUpload = require('express-fileupload');
 const cron = require('node-cron');
 const { processLogs } = require('../scripts/script-rabbit-logs');
 const date = require('date-and-time');
@@ -27,7 +25,7 @@ class Server {
     }
 
     cron() {
-        cron.schedule('*/5 * * * *', async () => {
+        cron.schedule('*/1 * * * *', async () => {
             try {
                 await processLogs();
                 const now = new Date();
