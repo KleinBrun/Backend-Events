@@ -26,11 +26,10 @@ class Server {
     }
 
     cron() {
-        cron.schedule('*/1 * * * *', async () => {
+        cron.schedule('*/5 * * * *', async () => {
             try {
                 await processLogs();
                 const now = new Date();
-                console.log(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')} :: Logs procesados `);
             } catch (error) {
                 console.error('Error al ejecutar el proceso de logs:', error);
             }
@@ -44,22 +43,6 @@ class Server {
     listen() {
         this.app.listen(this.port, () => {
             console.log(`Server Corriendo en el puerto ${this.port}`)
-
-            // Obtener y mostrar la IP local
-            const interfaces = os.networkInterfaces();
-            let ip = 'Desconocida';
-
-            for (let key in interfaces) {
-                for (let i = 0; i < interfaces[key].length; i++) {
-                    const iface = interfaces[key][i];
-                    if (iface.family === 'IPv4' && !iface.internal) {
-                        ip = iface.address;
-                        break;
-                    }
-                }
-            }
-
-            console.log(`Conectado desde la IP: ${ip} y puerto: ${this.port}`);
         })
     }
 }
