@@ -5,6 +5,7 @@ const { processLogs } = require('../scripts/script-rabbit-logs');
 const date = require('date-and-time');
 const { validateSecretKey } = require('../middlewares/auth-middleware');
 const os = require('os');
+const fs = require('fs');
 
 class Server {
     constructor() {
@@ -13,6 +14,11 @@ class Server {
         this.paths = {
             logs: '/api/logs',
         }
+
+        this.certOptions = {
+            key: fs.readFileSync(path.join(__dirname, '../certs/private.key')),
+            cert: fs.readFileSync(path.join(__dirname, '../certs/certificate.crt'))
+        };
 
         this.middlewares();
         this.routes();
