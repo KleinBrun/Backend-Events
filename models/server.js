@@ -20,7 +20,12 @@ class Server {
     }
 
     middlewares() {
-        this.app.use(cors());
+        const corsOptions = {
+            origin: ['http://localhost:3000', 'https://staging.d1o22k5pthccw4.amplifyapp.com'],
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            allowedHeaders: ['Content-Type', 'x-api-key']
+        };
+        this.app.use(cors(corsOptions));
         this.app.use(express.json());
         this.app.use(validateSecretKey);
     }
