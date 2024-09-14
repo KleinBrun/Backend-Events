@@ -8,6 +8,9 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 
+
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 class Server {
     constructor() {
         this.app = express();
